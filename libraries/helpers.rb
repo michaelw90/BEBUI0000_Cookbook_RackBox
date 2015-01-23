@@ -1,11 +1,11 @@
-module Rackbox
+module CookbookRackbox
   module Helpers
     def unicorn_config_filepath(appname)
       "/etc/unicorn/#{ appname }.rb"
     end
 
     def setup_passenger_runit(app, app_dir, default_port)
-      default_config =  node["rackbox"]["default_config"]["passenger_runit"].to_hash
+      default_config =  node["cookbook_rackbox"]["default_config"]["passenger_runit"].to_hash
       default_config["port"] = default_port
       config = merge_runit_config(
         default_config,
@@ -33,7 +33,7 @@ module Rackbox
 
     def setup_unicorn_runit(app, app_dir)
       config = merge_runit_config(
-        node["rackbox"]["default_config"]["unicorn_runit"],
+        node["cookbook_rackbox"]["default_config"]["unicorn_runit"],
         app["runit_config"]
       )
       unicorn_config_file = unicorn_config_filepath(app["appname"])
@@ -62,7 +62,7 @@ module Rackbox
     def setup_nginx_site(app, app_dir, upstream_port)
       upstream_server = "localhost:#{upstream_port}"
       config = merge_nginx_config(
-        node["rackbox"]["default_config"]["nginx"],
+        node["cookbook_rackbox"]["default_config"]["nginx"],
         app["nginx_config"]
       )
 
@@ -73,7 +73,11 @@ module Rackbox
         owner     "root"
         group     "root"
         variables(
-          :root_path   => ::File.join(app_dir, 'public'),
+          :rails_public_dir  => ::File.join(app_dir, app["rails_public_dir"]),
+          :rails_path  => app["rails_path"],
+          :static      => app["static"],
+          :static_public_dir => ::File.join(app_dir, app["static_public_dir"]),
+          :static_path => app["static_path"],
           :log_dir     => node["nginx"]["log_dir"],
           :appname     => app["appname"],
           :hostname    => app["hostname"],
@@ -98,7 +102,7 @@ module Rackbox
 
     def setup_unicorn_config(app, app_dir, default_port)
       config = merge_unicorn_config(
-        node["rackbox"]["default_config"]["unicorn"],
+        node["cookbook_rackbox"]["default_config"]["unicorn"],
         app["unicorn_config"],
         app_dir,
         default_port
