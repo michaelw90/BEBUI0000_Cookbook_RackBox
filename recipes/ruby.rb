@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: rackbox
+# Cookbook Name:: cookbook_rackbox
 # Recipe:: ruby
 #
 # Install and setup Ruby environment
@@ -8,10 +8,10 @@
 include_recipe "rbenv::default"
 include_recipe "rbenv::ruby_build"
 
-node["rackbox"]["ruby"]["versions"].each do |rb_version|
+node["cookbook_rackbox"]["ruby"]["versions"].each do |rb_version|
 
   rbenv_ruby rb_version do
-    global(node["rackbox"]["ruby"]["global_version"] == rb_version)
+    global(node["cookbook_rackbox"]["ruby"]["global_version"] == rb_version)
   end
   rbenv_gem "bundler" do
     ruby_version rb_version

@@ -8,7 +8,7 @@ server {
   server_name <%= @hostname %>;
   listen <%= @listen_port %>;
 
-  root <%= @root_path %>;
+  root <%= @rails_public_dir %>;
 
 <% if @ssl_key && @ssl_cert -%>
   ssl on;
@@ -30,7 +30,15 @@ server {
   # allow clients to upload large files (if necessary)
   client_max_body_size 4G;
 
-  location / {
+<% if @static -%>
+  location <%= @static_path %> {
+    root <%= @static_public_dir %>;
+    try_files /system/maintenance.html
+              $uri $uri/index.html $uri.html =404;
+  }
+<% end -%>
+  
+  location <%= @rails_path %> {
     try_files /system/maintenance.html
               $uri $uri/index.html $uri.html
               @app;
