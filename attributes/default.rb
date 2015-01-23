@@ -3,19 +3,19 @@ default["cookbook_rackbox"]["ruby"]["global_version"] = "1.9.3-p385"
 default["cookbook_rackbox"]["upstream_start_port"]["unicorn"] = 10001
 default["cookbook_rackbox"]["upstream_start_port"]["passenger"] = 20001
 
-default["cookbook_rackbox"]["default_config"]["passenger_app"]["capistrano_sub_dir"] = "current"
-default["cookbook_rackbox"]["default_config"]["passenger_app"]["rails_sub_dir"] = ""
+default["cookbook_rackbox"]["default_config"]["passenger_app"]["rails_sub_dir"] = "current"
 default["cookbook_rackbox"]["default_config"]["passenger_app"]["rails_public_dir"] = "public"
 default["cookbook_rackbox"]["default_config"]["passenger_app"]["rails_path"] = "/"
 default["cookbook_rackbox"]["default_config"]["passenger_app"]["static"] = false
+default["cookbook_rackbox"]["default_config"]["passenger_app"]["static_sub_dir"] = "current"
 default["cookbook_rackbox"]["default_config"]["passenger_app"]["static_public_dir"] = ""
 default["cookbook_rackbox"]["default_config"]["passenger_app"]["static_path"] = "/static"
 
-default["cookbook_rackbox"]["default_config"]["unicorn_app"]["capistrano_sub_dir"] = "current"
-default["cookbook_rackbox"]["default_config"]["unicorn_app"]["rails_sub_dir"] = ""
+default["cookbook_rackbox"]["default_config"]["unicorn_app"]["rails_sub_dir"] = "current"
 default["cookbook_rackbox"]["default_config"]["unicorn_app"]["rails_public_dir"] = "public"
 default["cookbook_rackbox"]["default_config"]["unicorn_app"]["rails_path"] = "/"
 default["cookbook_rackbox"]["default_config"]["unicorn_app"]["static"] = false
+default["cookbook_rackbox"]["default_config"]["unicorn_app"]["static_sub_dir"] = "current"
 default["cookbook_rackbox"]["default_config"]["unicorn_app"]["static_public_dir"] = ""
 default["cookbook_rackbox"]["default_config"]["unicorn_app"]["static_path"] = "/static"
 

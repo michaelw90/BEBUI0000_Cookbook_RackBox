@@ -59,7 +59,7 @@ module CookbookRackbox
       config.merge(app_config || {})
     end
 
-    def setup_nginx_site(app, app_dir, upstream_port)
+    def setup_nginx_site(app, rails_public_dir, static_public_dir, upstream_port)
       upstream_server = "localhost:#{upstream_port}"
       config = merge_nginx_config(
         node["cookbook_rackbox"]["default_config"]["nginx"],
@@ -73,10 +73,10 @@ module CookbookRackbox
         owner     "root"
         group     "root"
         variables(
-          :rails_public_dir  => ::File.join(app_dir, app["rails_public_dir"]),
+          :rails_public_dir  => rails_public_dir,
           :rails_path  => app["rails_path"],
           :static      => app["static"],
-          :static_public_dir => ::File.join(app_dir, app["static_public_dir"]),
+          :static_public_dir => static_public_dir,
           :static_path => app["static_path"],
           :log_dir     => node["nginx"]["log_dir"],
           :appname     => app["appname"],
