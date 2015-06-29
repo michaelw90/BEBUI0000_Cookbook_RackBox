@@ -1,5 +1,6 @@
-default["cookbook_rackbox"]["ruby"]["versions"] = %w(1.9.3-p385)
-default["cookbook_rackbox"]["ruby"]["global_version"] = "1.9.3-p385"
+default['cookbook_rackbox']['ruby']['use_rvm'] = true
+default['cookbook_rackbox']['ruby']['versions'] = %w(1.9.3-p385)
+default['cookbook_rackbox']['ruby']['global_version'] = '1.9.3-p385'
 default["cookbook_rackbox"]["upstream_start_port"]["unicorn"] = 10001
 default["cookbook_rackbox"]["upstream_start_port"]["passenger"] = 20001
 
