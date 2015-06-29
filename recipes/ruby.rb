@@ -11,6 +11,9 @@ if node['cookbook_rackbox']['ruby']['use_rvm'] == false
   ruby_build_ruby node['cookbook_rackbox']['ruby']['global_version'] do
     action :install
   end
+  gem_package 'bundler' do
+    action :install
+  end
 
 else
 
