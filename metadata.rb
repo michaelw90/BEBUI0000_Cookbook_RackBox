@@ -4,7 +4,7 @@ maintainer_email "fred.thompson@buildempire.co.uk"
 license          "Apache License 2.0"
 description      "Setup a rack-based application server to run unicorn and passenger apps."
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.0.2"
+version          "0.0.3"
 
 recipe "cookbook_rackbox", "run all recipes."
 recipe "cookbook_rackbox::ruby", "setup a ruby version manager `rbenv`."
@@ -17,6 +17,7 @@ supports 'debian'
 
 depends 'appbox'
 depends 'rbenv'
+depends 'ruby_build'
 depends 'nginx'
 depends 'unicorn', ">= 1.2.2"
 depends 'runit', '>= 1.1.2'
