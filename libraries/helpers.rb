@@ -1,8 +1,5 @@
 module CookbookRackbox
   module Helpers
-    def unicorn_config_filepath(appname)
-      "/etc/unicorn/#{ appname }.rb"
-    end
 
     def setup_passenger_runit(app, app_dir, default_port)
       default_config =  node["cookbook_rackbox"]["default_config"]["passenger_runit"].to_hash
@@ -31,28 +28,6 @@ module CookbookRackbox
       end
     end
 
-    def setup_unicorn_runit(app, app_dir)
-      config = merge_runit_config(
-        node["cookbook_rackbox"]["default_config"]["unicorn_runit"],
-        app["runit_config"]
-      )
-      unicorn_config_file = unicorn_config_filepath(app["appname"])
-
-      runit_service app["appname"] do
-        run_template_name  config["template_name"]
-        log_template_name  config["template_name"]
-        cookbook       config["template_cookbook"]
-        options(
-          :user                 => node["appbox"]["apps_user"],
-          :group                => node["appbox"]["apps_user"],
-          :rack_env            => config["rack_env"],
-          :smells_like_rack     => true, #::File.exists?(::File.join(app_dir, "config.ru")),
-          :unicorn_config_file  => unicorn_config_file,
-          :working_directory    => app_dir
-        )
-        restart_on_update false
-      end
-    end
 
     def merge_runit_config(default_config, app_config)
       config = default_config.to_hash
@@ -99,33 +74,7 @@ module CookbookRackbox
       config = default_config.to_hash
       config.merge(app_config || {})
     end
-
-    def setup_unicorn_config(app, app_dir, default_port)
-      config = merge_unicorn_config(
-        node["cookbook_rackbox"]["default_config"]["unicorn"],
-        app["unicorn_config"],
-        app_dir,
-        default_port
-      )
-
-      unicorn_config unicorn_config_filepath(app["appname"]) do
-        config.each do |key, value|
-          send(key, value)
-        end
-        notifies :restart, "runit_service[#{app["appname"]}]"
-      end
-    end
-
-    def merge_unicorn_config(default_config, app_config, app_dir, upstream_port)
-      config = default_config.to_hash
-      port_options = config.delete("listen_port_options")
-
-      config = config.merge(
-        :listen => { upstream_port => port_options },
-        :working_directory => app_dir
-      )
-      config.merge(app_config || {})
-    end
+    
   end
 
 end
