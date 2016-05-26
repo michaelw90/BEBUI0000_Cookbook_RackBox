@@ -23,6 +23,8 @@ node[:deploy].each do |application, deploy|
     command "bundle install --binstubs"
   end
 
-  execute :sudo, :sv, "restart #{deploy[:application]}"
+  execute "Restart Application" do
+    command "sudo sv restart #{deploy[:application]}"
+  end
 
 end
