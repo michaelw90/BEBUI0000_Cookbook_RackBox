@@ -13,7 +13,7 @@ module CookbookRackbox
         log_template_name  config["template_name"]
         cookbook       config["template_cookbook"]
         options(
-          :user              => node["appbox"]["apps_user"],
+          :user              => 'deploy',
           :group             => node["appbox"]["apps_user"],
           :rack_env          => config["rack_env"],
           :working_directory => app_dir,
