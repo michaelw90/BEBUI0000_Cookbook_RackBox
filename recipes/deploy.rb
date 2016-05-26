@@ -17,4 +17,12 @@ node[:deploy].each do |application, deploy|
     deploy_data deploy
     app application
   end
+
+  execute "Bundle Install" do
+    cwd "#{deploy[:current_path]}/rails"
+    command "bundle install --binstubs"
+  end
+
+  execute :sudo, :sv, "restart #{deploy[:application]}"
+
 end
