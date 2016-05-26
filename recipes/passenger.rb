@@ -6,6 +6,8 @@
 
 package "libcurl4-openssl-dev"
 
+package "libmysqlclient-dev"
+
 ::Chef::Recipe.send(:include, CookbookRackbox::Helpers)
 
 Array(node["cookbook_rackbox"]["apps"]["passenger"]).each_with_index do |app, index|
