@@ -25,7 +25,7 @@ node[:deploy].each do |application, deploy|
 
   execute "CKEditor Compile" do
     cwd "#{deploy[:current_path]}/rails"
-    command "RAILS_ENV=production ckeditor:create_nondigest_assets"
+    command "RAILS_ENV=production rake ckeditor:create_nondigest_assets"
   end
 
   execute "Rake Assets PrecompilE" do
