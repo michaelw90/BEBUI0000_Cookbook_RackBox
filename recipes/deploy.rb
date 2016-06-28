@@ -20,7 +20,12 @@ node[:deploy].each do |application, deploy|
 
   execute "Bundle Install" do
     cwd "#{deploy[:current_path]}/rails"
-    command "bundle install --binstubs"
+    command "sudo bundle install --binstubs"
+  end
+
+  execute "Own Assets & Public" do
+    cwd "#{deploy[:current_path]}/rails"
+    command "sudo chmod -R 0777 public tmp"
   end
 
   execute "CKEditor Compile" do
@@ -28,7 +33,7 @@ node[:deploy].each do |application, deploy|
     command "RAILS_ENV=production rake ckeditor:create_nondigest_assets"
   end
 
-  execute "Rake Assets PrecompilE" do
+  execute "Rake Assets Precompile" do
     cwd "#{deploy[:current_path]}/rails"
     command "RAILS_ENV=production rake assets:precompile"
   end
@@ -36,5 +41,4 @@ node[:deploy].each do |application, deploy|
   execute "Restart Application" do
     command "sudo sv restart #{deploy[:application]}"
   end
-
 end
